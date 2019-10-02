@@ -412,6 +412,10 @@ NS_ASSUME_NONNULL_BEGIN
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self performNativeXHR:body inWebView:weakWebView];
     });
+ 
+    for (NSHTTPCookie * cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
+        [weakWebView.configuration.websiteDataStore.httpCookieStore setCookie:cookie completionHandler:nil];
+    }
     
 }
 
